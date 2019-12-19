@@ -1,0 +1,33 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+  
+<suite name="RamasTests" verbose="1" parallel="tests">
+
+   <test name="RamasTestsonchrome" >
+  
+  <parameter name="browser" value="Chrome"/>
+  
+    <classes>
+    
+       <class name="com.tests.LoginTest" />
+      
+    </classes>
+    
+
+</test>
+
+  
+  <test name="RamasTestsonfirefox"  >
+  
+  <parameter name="browser" value="Firefox"/>
+  
+    <classes>
+    
+       <class name="com.tests.LoginTest" />
+    </classes>
+    
+
+  </test>
+
+
+  
+</suite>
