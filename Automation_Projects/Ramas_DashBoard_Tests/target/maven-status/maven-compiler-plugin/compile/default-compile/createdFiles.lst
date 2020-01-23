@@ -1,0 +1,7 @@
+com\utilities\BrowserFactory.class
+com\utilities\PropertyUtil.class
+com\utilities\WebEvents.class
+com\functions\Validate.class
+com\pages\LoginPage.class
+com\utilities\BrowserFactoryGrid.class
+com\utilities\Screenshot.class

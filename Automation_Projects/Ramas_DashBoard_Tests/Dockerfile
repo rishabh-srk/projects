@@ -1,0 +1,19 @@
+FROM openjdk:8u191-jre-alpine3.8
+
+#Workspace
+WORKDIR /E/Automation_Projects/Ramas_DashBoard_Tests
+
+#ADD .jar under target from host
+#in to this image
+ADD target/selenium-docker-tests.jar  selenium-docker.jar
+ADD target/selenium-docker-tests.jar  selenium-docker-tests.jar
+ADD target/libs                       libs
+
+#ADD SUITE FILES
+ADD testng.xml                        testng.xml
+
+#ADD POM FILE
+ADD pom.xml                           pom.xml
+
+ENTRYPOINT java -cp selenium-docker.jar:selenium-docker-tests:jar:libs/* org.testng.TestNG testng.xml
+

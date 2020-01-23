@@ -1,0 +1,189 @@
+package com.tests;
+
+
+
+import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.ChartLocation;
+import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.pages.LoginPage;
+import com.utilities.BrowserFactory;
+import com.utilities.PropertyUtil;
+import com.utilities.WebEvents;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+
+public class LoginTest  {
+	
+	
+	WebDriver driver;
+	
+	SoftAssert assertion = new SoftAssert();
+	
+	//builds a new report using the html template 
+    ExtentHtmlReporter htmlReporter;
+    
+    ExtentReports extent;
+    //helps to generate the logs in test report.
+    ExtentTest test;
+	
+	
+	@BeforeMethod
+	@Parameters("browser")
+	public void setUp(String browserName)  {
+		
+		
+		// initialize the HtmlReporter
+        htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/test-output/testReport.html");
+        
+        //initialize ExtentReports and attach the HtmlReporter
+        extent = new ExtentReports();
+        extent.attachReporter(htmlReporter);
+        
+        
+        htmlReporter.config().setReportName("Test Report-RamasDashBoard");
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+        htmlReporter.config().setTheme(Theme.STANDARD);
+        htmlReporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
+		
+		
+		
+		
+		
+		
+
+		// initialize browser and open application
+
+		long threadId = Thread.currentThread().getId();
+		System.out.println(threadId);
+
+	driver=BrowserFactory.startBrowser(driver, browserName);
+	driver.get(PropertyUtil.getPropertyKey("test_Url_Unstable"));
+
+	}
+
+	@AfterMethod
+	public void tearDown(ITestResult result) {
+		
+		  if(result.getStatus() == ITestResult.FAILURE) {
+	            test.log(Status.FAIL, MarkupHelper.createLabel(result.getName()+" FAILED ", ExtentColor.RED));
+	            test.fail(result.getThrowable());
+	        }
+	        else if(result.getStatus() == ITestResult.SUCCESS) {
+	            test.log(Status.PASS, MarkupHelper.createLabel(result.getName()+" PASSED ", ExtentColor.GREEN));
+	        }
+	        else {
+	            test.log(Status.SKIP, MarkupHelper.createLabel(result.getName()+" SKIPPED ", ExtentColor.ORANGE));
+	            test.skip(result.getThrowable());
+	        }
+	    
+	
+
+		driver.quit();
+		
+	    extent.flush();
+
+	}
+
+		
+
+		@Test(description = "verify login with valid credentials", priority = 1)
+		@Severity(SeverityLevel.BLOCKER)
+		@Description("verify login with valid credentials")
+
+		public void test_Login_Valid_Credentials()  {
+
+			LoginPage loginObject = new LoginPage(driver);
+
+			WebEvents.waitHere(6);
+
+			
+
+			// enter username
+
+			loginObject.enter_UserName("mccainlightadmin");
+			WebEvents.waitHere(6);
+
+			// enter password
+
+			loginObject.enter_Password("r3sson");
+			WebEvents.waitHere(6);
+
+			// click Login
+
+			loginObject.click_Login();
+			WebEvents.waitHere(4);
+
+			// verify field overview is displayed
+
+			assertion.assertTrue(loginObject.verify_FieldOverview_IsDisplayed());
+
+			
+			WebEvents.waitHere(5);
+
+			long threadId = Thread.currentThread().getId();
+			System.out.println(threadId);
+
+			assertion.assertAll();
+		}
+
+		@Test(description = "verify error snack bar with invalid credentials", priority = 2)
+		@Severity(SeverityLevel.NORMAL)
+		@Description("verify login with valid credentials")
+
+		public void test_errorSnackBar_inValid_Credentials() {
+
+			LoginPage loginObject = new LoginPage(driver);
+
+		
+
+			WebEvents.waitHere(6);
+
+			loginObject.enter_UserName("abc");
+			
+
+			// enter invalid password
+
+			loginObject.enter_Password("123");
+			
+
+			// click Login
+
+			loginObject.click_Login();
+			WebEvents.waitHere(7);
+
+			// verify error snack bar is displayed
+
+			assertion.assertTrue(loginObject.verify_ErrorSnackBar_IsDisplayed());
+
+			// verify error snack bar text
+
+		
+		assertion.assertTrue(loginObject.verify_errorSnackBar_Text("The username or password you entered is incorrect"));
+
+			
+			WebEvents.waitHere(5);
+
+			long threadId = Thread.currentThread().getId();
+			System.out.println(threadId);
+
+			assertion.assertAll();
+
+		}
+
+
+}

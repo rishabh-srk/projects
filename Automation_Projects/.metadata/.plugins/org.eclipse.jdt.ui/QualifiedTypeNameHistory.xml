@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.testng.annotations.Parameters"/>
+<fullyQualifiedTypeName name="org.openqa.selenium.Platform"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="org.openqa.selenium.io.FileHandler"/>
+<fullyQualifiedTypeName name="com.utilities.BaseClass"/>
+<fullyQualifiedTypeName name="com.utilities.PropertyUtil"/>
+<fullyQualifiedTypeName name="com.utilities.BrowserFactory"/>
+<fullyQualifiedTypeName name="com.utilities.BrowserFactoryGrid"/>
+</qualifiedTypeNameHistroy>
